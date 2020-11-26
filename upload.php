@@ -1,3 +1,5 @@
+
+
 <?php
 /**
  * 1.建立表單
@@ -39,13 +41,17 @@ if(!empty($_FILES['img']['tmp_name'])){
     $filename=date("Ymdhis").".".$subname;
     
     move_uploaded_file($_FILES['img']['tmp_name'],"./img/".$filename);
+
+    //將表單的資料存在陣列中
     $row=[
         "name"=>$_FILES['img']['name'],
         "path"=>"./img/".$filename,
         "type"=>$_POST['type'],
         "note"=>$_POST['note']
     ];
-    print_r($row);
+    // print_r($row);
+
+    //將表單的資料寫入資料庫
     save("upload",$row);
 }
 
@@ -58,6 +64,17 @@ if(!empty($_FILES['img']['tmp_name'])){
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>檔案上傳</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+    table{
+        border: 2px solid #ccc;
+        border-collapse: collapse;
+        text-align: center;
+    }
+    td{
+        border: 1px solid #ccc;
+        padding: 20px;
+    }
+    </style>
 </head>
 <body>
 <h1 class="header">檔案上傳練習</h1>
@@ -79,6 +96,35 @@ if(!empty($_FILES['img']['tmp_name'])){
 
 
 <!----建立一個連結來查看上傳後的圖檔---->  
+<?php
+$rows=all('upload');
+echo "<table>";
+echo "<td>縮圖</td>";
+echo "<td>檔案名稱</td>";
+echo "<td>檔案類型</td>";
+echo "<td>檔案說明</td>";
+echo "<td>下載</td>";
+foreach($rows as $row){
+    echo "<tr>";
+
+    if($row['type']=='圖檔'){
+        echo "<td><img src='{$row['path']}' style='width:100px'></td>";
+        
+    }else{
+        echo "<td><img src='./img/003_c.png' style='width:100px'></td>";
+
+    }
+    
+    echo "<td>{$row['name']}</td>";
+    echo "<td>{$row['type']}</td>";
+    echo "<td>{$row['note']}</td>";
+    echo "<td><a href='{$row['path']}' download>下載</a></td>";
+    
+    echo "</tr>";
+}
+echo "</table>";
+
+?>
 
 
 </body>
