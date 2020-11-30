@@ -16,11 +16,80 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>檔案管理功能</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+    table{
+        border: 2px solid #ccc;
+        border-collapse: collapse;
+        text-align: center;
+    }
+    td{
+        border: 1px solid #ccc;
+        padding: 20px;
+    }
+
+    a.primary,a.danger{
+        border-radius: 10px;
+        padding: 5px 10px;
+        color: darkslategray;
+        box-shadow: -1px 1px 3px 0px black;
+        font-size: 14px;
+        margin:5px;
+
+    }
+    a.primary{
+        background: powderblue;
+        
+    }
+    a.danger{
+        background: pink;
+        
+    }
+    </style>
 </head>
 <body>
 <h1 class="header">檔案管理練習</h1>
 <!----建立上傳檔案表單及相關的檔案資訊存入資料表機制----->
 
+
+
+<a href="upload.php" style="display:block;width:80px;text-align:center;margin:10px auto;box-shadow:0 0 5px #ccc">檔案上傳</a>
+<!----建立一個連結來查看上傳後的圖檔---->  
+<?php
+include_once "base.php";
+
+$rows=all('upload');
+echo "<table>";
+echo "<td>縮圖</td>";
+echo "<td>檔案名稱</td>";
+echo "<td>檔案類型</td>";
+echo "<td>檔案說明</td>";
+echo "<td>下載</td>";
+echo "<td>操作</td>";
+foreach($rows as $row){
+    echo "<tr>";
+
+    if($row['type']=='圖檔'){
+        echo "<td><img src='{$row['path']}' style='width:100px'></td>";
+        
+    }else{
+        echo "<td><img src='./img/003_c.png' style='width:100px'></td>";
+
+    }
+    
+    echo "<td>{$row['name']}</td>";
+    echo "<td>{$row['type']}</td>";
+    echo "<td>{$row['note']}</td>";
+    echo "<td><a href='{$row['path']}' download>下載</a></td>";
+    echo "<td>";
+    echo "  <a class='primary' href='edit.php?id={$row['id']}'>編輯</a>";
+    echo "  <a class='danger' href='del.php?id={$row['id']}'>刪除</a>";
+    echo "</td>";
+
+    echo "</tr>";
+}
+    echo "</table>";
+
+?>
 
 
 

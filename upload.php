@@ -53,6 +53,7 @@ if(!empty($_FILES['img']['tmp_name'])){
 
     //將表單的資料寫入資料庫
     save("upload",$row);
+    to('manage.php');
 }
 
 ?>
@@ -65,14 +66,15 @@ if(!empty($_FILES['img']['tmp_name'])){
     <title>檔案上傳</title>
     <link rel="stylesheet" href="style.css">
     <style>
-    table{
-        border: 2px solid #ccc;
-        border-collapse: collapse;
-        text-align: center;
-    }
-    td{
-        border: 1px solid #ccc;
+    form{
+        border: 3px solid blue;
+        margin: auto;
         padding: 20px;
+        width: 300px;
+    }
+
+    form div{
+        margin:
     }
     </style>
 </head>
@@ -88,8 +90,8 @@ if(!empty($_FILES['img']['tmp_name'])){
             <option value="文件">文件</option>
             <option value="其他">其他</option>
         </select>
-        <input type="submit" value="上傳">
     </div>
+        <input type="submit" value="上傳">
 </form>
 
 
@@ -97,32 +99,32 @@ if(!empty($_FILES['img']['tmp_name'])){
 
 <!----建立一個連結來查看上傳後的圖檔---->  
 <?php
-$rows=all('upload');
-echo "<table>";
-echo "<td>縮圖</td>";
-echo "<td>檔案名稱</td>";
-echo "<td>檔案類型</td>";
-echo "<td>檔案說明</td>";
-echo "<td>下載</td>";
-foreach($rows as $row){
-    echo "<tr>";
+// $rows=all('upload');
+// echo "<table>";
+// echo "<td>縮圖</td>";
+// echo "<td>檔案名稱</td>";
+// echo "<td>檔案類型</td>";
+// echo "<td>檔案說明</td>";
+// echo "<td>下載</td>";
+// foreach($rows as $row){
+//     echo "<tr>";
 
-    if($row['type']=='圖檔'){
-        echo "<td><img src='{$row['path']}' style='width:100px'></td>";
+//     if($row['type']=='圖檔'){
+//         echo "<td><img src='{$row['path']}' style='width:100px'></td>";
         
-    }else{
-        echo "<td><img src='./img/003_c.png' style='width:100px'></td>";
+//     }else{
+//         echo "<td><img src='./img/003_c.png' style='width:100px'></td>";
 
-    }
+//     }
     
-    echo "<td>{$row['name']}</td>";
-    echo "<td>{$row['type']}</td>";
-    echo "<td>{$row['note']}</td>";
-    echo "<td><a href='{$row['path']}' download>下載</a></td>";
+//     echo "<td>{$row['name']}</td>";
+//     echo "<td>{$row['type']}</td>";
+//     echo "<td>{$row['note']}</td>";
+//     echo "<td><a href='{$row['path']}' download>下載</a></td>";
     
-    echo "</tr>";
-}
-echo "</table>";
+//     echo "</tr>";
+// }
+// echo "</table>";
 
 ?>
 

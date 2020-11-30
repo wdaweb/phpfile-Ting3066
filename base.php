@@ -73,7 +73,8 @@ function save($table,$array){
 }
 
 function del($table,$id){
-  $sql="delete * from $table where ";
+  global $pdo;
+  $sql="delete from $table where ";
   if(is_array($id)){
       foreach($id as $key => $value){
         $tmp[]=sprintf("`%s`='%s'",$key,$value);
@@ -87,6 +88,7 @@ function del($table,$id){
 
 
   }
+  echo $sql;
   $row=$pdo->exec($sql);
   return $row;
 }
@@ -135,27 +137,6 @@ function all($table,...$arg){
     echo $sql."<br>";
   
     return $pdo->query($sql)->fetchALL();
-    function del($table,$id){
-      $sql="delete * from $table where ";
-      if(is_array($id)){
-          foreach($id as $key => $value){
-            $tmp[]=sprintf("`%s`='%s'",$key,$value);
-          }
-  
-          $sql=$sql.implode(" && ",$tmp);
-    
-      }else{
-    
-          $sql=$sql." id='$id' ";
-    
-    
-      }
-      $row=$pdo->exec($sql);
-      return $row;
-    }
-    $def=['code'=>'GD'];
-    echo del('invoices',$def);
   }
-  
 
 ?>
