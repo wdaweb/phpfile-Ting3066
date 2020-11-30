@@ -15,16 +15,30 @@ if(!empty($_FILES['txt']['tmp_name'])){
     move_uploaded_file($_FILES['txt']['tmp_name'],"./upload/".$_FILES['txt']['name']);
 
     $file=fopen("./upload/".$_FILES['txt']['name'],'r');
-    $line=fgets($file);
-    echo $line;
-    $line=explode(",",$line);
-    $data=[
-        'name'=>$line[1],
-        'age'=>$line[2],
-        'birthday'=>$line[3],
-        'addr'=>$line[4]
-    ];
-    save('students',$data);
+
+    $num=0;
+    while(!feof($file)){
+        //先取出檔案資料，讓指針位置在第一行
+        $line=fgets($file);
+
+        //判斷若為第一行檔頭資料則不寫入資料庫中
+        if($num!=0){
+            $line=explode(",",$line);
+            $data=[
+                'name'=>$line[1],
+                'age'=>$line[2],
+                'birthday'=>$line[3],
+                'addr'=>$line[4]
+            ];
+            save('students',$data);
+
+        }
+
+        //$num++則可以持續寫入資料
+        $num++;
+        
+    }
+    
 }
 ?>
 <!DOCTYPE html>
