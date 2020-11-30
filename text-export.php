@@ -12,10 +12,20 @@ include_once "base.php";
 
 if(!empty($_GET['do']) && $_GET['do']=='download'){
     $rows=all("students");
+    $file=fopen('download.csv',"w+");
+
+    //先寫入bom頭，在excel開啟時內容才不會變成亂碼
+    $utf8_with_bom=chr(239).chr(187).chr(191);
+    fwrite($file,$utf8_with_bom);
     foreach($rows as $row){
         $line=implode(',',[$row['id'],$row['name'],$row['age'],$row['birthday'],$row['addr']]);
-        echo $line."<br>";
+        fwrite($file,$line);
+        echo $line."-已寫入<br>";
     }
+
+    fclose($file);
+
+    $filename="download.csv";
 }
 
 ?>
@@ -57,7 +67,12 @@ if(!empty($_GET['do']) && $_GET['do']=='download'){
 
 $rows=all('students');
 
+if(isset($filename)){
 
+?>
+<a href="download.csv" download>開始下載</a>
+<?php
+}
 ?>
 <table>
     <tr>

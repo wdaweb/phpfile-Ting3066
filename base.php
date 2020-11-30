@@ -134,8 +134,6 @@ function all($table,...$arg){
   
   
     }
-    // echo $sql."<br>";
-  
     return $pdo->query($sql)->fetchALL();
   }
 
